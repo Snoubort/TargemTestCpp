@@ -99,24 +99,8 @@ public:
         this->value[this->size] = '\0';
         return *this;
     }
-    friend String operator+(const String& left, const String& right) {
-        char* newValue = new char[left.size + right.size + 1];
-        memcpy(newValue, left.value, left.size);
-        memcpy(newValue + left.size, right.value, right.size);
-        newValue[left.size + right.size] = '\0';
-        String result(newValue);
-        delete[](newValue);
-        return result;
-    }
-    friend String& operator+(const String& left, const char* right) {
-        char* newValue = new char[left.size + strlen(right) + 1];
-        memcpy(newValue, left.value, left.size);
-        memcpy(newValue + strlen(right), right, strlen(right));
-        newValue[left.size + strlen(right)] = '\0';
-        String result(newValue);
-        delete[](newValue);
-        return result;
-    }
+    friend String operator+(const String& left, const String& right);
+    friend String& operator+(const String& left, const char* right);
     char operator[](int index) {
         return value[index];
     }
@@ -167,6 +151,24 @@ std::istream& operator>>(std::istream& is, String& inStr)
     std::cin.getline(str, 1000);
     inStr = str;
     return is;
+}
+String operator+(const String& left, const String& right) {
+    char* newValue = new char[left.size + right.size + 1];
+    memcpy(newValue, left.value, left.size);
+    memcpy(newValue + left.size, right.value, right.size);
+    newValue[left.size + right.size] = '\0';
+    String result(newValue);
+    delete[](newValue);
+    return result;
+}
+String& operator+(const String& left, const char* right) {
+    char* newValue = new char[left.size + strlen(right) + 1];
+    memcpy(newValue, left.value, left.size);
+    memcpy(newValue + strlen(right), right, strlen(right));
+    newValue[left.size + strlen(right)] = '\0';
+    String result(newValue);
+    delete[](newValue);
+    return result;
 }
 
 using namespace std;
